@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import './index.css';
 
-function App() {
+import Header from "./components/Header";
+import Search from "./components/Search";
+import Music from "./components/Music";
+import AddMusic from "./components/AddMusic";
+
+function App(props) {
+  const [musics, setMusics] = useState(props.musics);
+  const count = musics.length;
+
+  function addMusic(title, subtitle) {
+    const newMusic = {id:count+1, like:0, title: title, subtitle: subtitle, media:''};
+    setMusics([...musics, newMusic]);
+  }
+
+  const musicList = musics.map(music => (
+    <Music 
+      id = {music.id}
+      like = {music.like}
+      title = {music.title}
+      subtitle = {music.subtitle}
+      media = {music.media}
+      key = {music.id}
+    />
+  ));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <AddMusic />
+      <div class="container body">
+        <div class="row">
+          <Search />
+          {musicList}
+        </div>
+      </div>
     </div>
   );
 }

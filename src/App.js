@@ -27,14 +27,14 @@ function App(props) {
         }
         return false;
       }
-      const filteredMusics = filMusics.filter(checker);
+      const filteredMusics = musics.filter(checker);
       setFilMusics(filteredMusics);
     }
   }
 
   function addMusic(title, subtitle) {
     const newMusic = {id:count+1, like:0, title: title, subtitle: subtitle, media:'', liked: false};
-    setMusics([...filMusics, newMusic]);
+    setMusics([...musics, newMusic]);
     setFilMusics([...filMusics, newMusic]);
   }
 
@@ -52,6 +52,7 @@ function App(props) {
       }
       return music;
     });
+    console.log(filMusics);
     setMusics(likedMusic);
     setFilMusics(likedMusic);
   }

@@ -8,33 +8,75 @@ import AddMusic from "./components/AddMusic";
 
 function App(props) {
   const [musics, setMusics] = useState(props.musics);
-  const count = musics.length;
+  const [filMusics, setFilMusics] = useState(musics);
+  const count = filMusics.length;
+  
+  function search(search){
+    if (search === ''){
+      setFilMusics(musics);
+    }
+    else{
+      const keywords = search.split(" ");
 
-  function addMusic(title, subtitle) {
-    const newMusic = {id:count+1, like:0, title: title, subtitle: subtitle, media:''};
-    setMusics([...musics, newMusic]);
+      function checker(music){
+        for(var i = 0; i < keywords.length; i++){
+          if(music.title.toLowerCase().includes(keywords[i].toLowerCase()) || 
+             music.subtitle.toLowerCase().includes(keywords[i].toLowerCase())){
+            return true;
+          }
+        }
+        return false;
+      }
+      const filteredMusics = filMusics.filter(checker);
+      setFilMusics(filteredMusics);
+    }
   }
 
-  const musicList = musics.map(music => (
+  function addMusic(title, subtitle) {
+    const newMusic = {id:count+1, like:0, title: title, subtitle: subtitle, media:'', liked: false};
+    setMusics([...filMusics, newMusic]);
+    setFilMusics([...filMusics, newMusic]);
+  }
+
+  function deleteMusic(id) {
+    const remainingMusics = filMusics.filter(music => id !== music.id);
+    setMusics(remainingMusics);
+    setFilMusics(remainingMusics);
+  }
+
+  function onLiked(id){
+    const likedMusic = filMusics.map(music => {
+      if(id === music.id){
+        return  music.liked ? {...filMusics, id:music.id, like:music.like-1, title: music.title, subtitle: music.subtitle, media:'', liked: false} :
+                              {...filMusics, id:music.id, like:music.like+1, title: music.title, subtitle: music.subtitle, media:'', liked: true};
+      }
+      return music;
+    });
+    setMusics(likedMusic);
+    setFilMusics(likedMusic);
+  }
+
+  const musicList = filMusics.map(music => (
     <Music 
       id = {music.id}
       like = {music.like}
       title = {music.title}
       subtitle = {music.subtitle}
       media = {music.media}
+      liked = {music.liked}
       key = {music.id}
+      deleteMusic = {deleteMusic}
+      onLiked = {onLiked}
     />
   ));
   return (
     <div>
       <Header />
-      <AddMusic />
-      <div class="container body">
-        <div class="row">
-          <Search />
-          {musicList}
-        </div>
+      <div className="container body">
+        <Search search = {search} />
+        {musicList}
       </div>
+      <AddMusic addMusic={addMusic} />
     </div>
   );
 }

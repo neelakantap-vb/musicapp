@@ -3,6 +3,7 @@ html, body{
 }
 .container{
   max-width: 100%;
+  margin-bottom: 3rem;
 }
 
 /* Navbar */
@@ -69,6 +70,9 @@ audio{
   color:gray;
 }
 
+.liked{
+  color: #E94D85;
+}
 
 .add-btn{
   width: 5rem;
@@ -82,4 +86,24 @@ audio{
 
 .card{
   border-radius: 20px;
+}
+
+/* addform */
+
+.add-form{
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  z-index: 99;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 110vh;
+  margin: 0;
+}
+
+.modal-content{
+  background-color: white;
+  opacity: 10;
+  border-radius: 25px;
 }

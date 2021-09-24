@@ -3,7 +3,7 @@ import React from 'react';
 export default function Header(){
     return(
         <div className="container">
-            <nav className="navbar navbar-expand-lg header fixed-top">
+            <nav className="navbar navbar-expand-md header fixed-top">
                 <a className="navbar-brand mr-auto" href="./"><i className="fas fa-music"></i> MUSIC</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>

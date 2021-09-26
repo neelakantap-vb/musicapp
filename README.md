@@ -1,3 +1,14 @@
+# musicApp
+This is an entertainment app to listen and add your favourite music to it.  
+Developed using HTML, CSS, JavaScript, Bootstrap, and React.  
+As for assignment-4 VB.
+
+
+
+https://user-images.githubusercontent.com/89968767/134796633-818e3539-2546-4594-93b5-dd2a26c76a28.mp4
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

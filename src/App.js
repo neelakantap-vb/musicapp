@@ -8,12 +8,13 @@ import AddMusic from "./components/AddMusic";
 
 function App(props) {
   const [musics, setMusics] = useState(props.musics);
-  const [filMusics, setFilMusics] = useState(musics);
-  const count = filMusics.length;
+  const [isFilter, setFilter] = useState(false);
+  const [filtered, setFiltered] = useState('');
+  const count = musics.length;
   
   function search(search){
     if (search === ''){
-      setFilMusics(musics);
+      setFilter(false);
     }
     else{
       const keywords = search.split(" ");
@@ -28,36 +29,34 @@ function App(props) {
         return false;
       }
       const filteredMusics = musics.filter(checker);
-      setFilMusics(filteredMusics);
+      setFiltered(filteredMusics);
+      setFilter(true);
     }
   }
 
   function addMusic(title, subtitle) {
     const newMusic = {id:count+1, like:0, title: title, subtitle: subtitle, media:'', liked: false};
     setMusics([...musics, newMusic]);
-    setFilMusics([...filMusics, newMusic]);
+    console.log(musics);
   }
 
   function deleteMusic(id) {
-    const remainingMusics = filMusics.filter(music => id !== music.id);
+    const remainingMusics = musics.filter(music => id !== music.id);
     setMusics(remainingMusics);
-    setFilMusics(remainingMusics);
   }
 
   function onLiked(id){
-    const likedMusic = filMusics.map(music => {
+    const likedMusic = musics.map(music => {
       if(id === music.id){
-        return  music.liked ? {...filMusics, id:music.id, like:music.like-1, title: music.title, subtitle: music.subtitle, media:'', liked: false} :
-                              {...filMusics, id:music.id, like:music.like+1, title: music.title, subtitle: music.subtitle, media:'', liked: true};
+        return  music.liked ? {...musics, id:music.id, like:music.like-1, title: music.title, subtitle: music.subtitle, media:'', liked: false} :
+                              {...musics, id:music.id, like:music.like+1, title: music.title, subtitle: music.subtitle, media:'', liked: true};
       }
       return music;
     });
-    console.log(filMusics);
     setMusics(likedMusic);
-    setFilMusics(likedMusic);
   }
-
-  const musicList = filMusics.map(music => (
+  const data = isFilter ? filtered : musics;
+  const musicList = data.map(music => (
     <Music 
       id = {music.id}
       like = {music.like}

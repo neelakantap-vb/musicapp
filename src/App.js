@@ -8,36 +8,16 @@ import AddMusic from "./components/AddMusic";
 
 function App(props) {
   const [musics, setMusics] = useState(props.musics);
-  const [isFilter, setFilter] = useState(false);
   const [filtered, setFiltered] = useState('');
-  const count = musics.length;
+  const count = musics[musics.length-1].id;
   
   function search(search){
-    if (search === ''){
-      setFilter(false);
-    }
-    else{
-      const keywords = search.split(" ");
-
-      function checker(music){
-        for(var i = 0; i < keywords.length; i++){
-          if(music.title.toLowerCase().includes(keywords[i].toLowerCase()) || 
-             music.subtitle.toLowerCase().includes(keywords[i].toLowerCase())){
-            return true;
-          }
-        }
-        return false;
-      }
-      const filteredMusics = musics.filter(checker);
-      setFiltered(filteredMusics);
-      setFilter(true);
-    }
+    setFiltered(search);
   }
 
   function addMusic(title, subtitle) {
     const newMusic = {id:count+1, like:0, title: title, subtitle: subtitle, media:'', liked: false};
     setMusics([...musics, newMusic]);
-    console.log(musics);
   }
 
   function deleteMusic(id) {
@@ -55,8 +35,22 @@ function App(props) {
     });
     setMusics(likedMusic);
   }
-  const data = isFilter ? filtered : musics;
-  const musicList = data.map(music => (
+
+  const musicList = musics.filter((data)=>{
+    if(filtered === ''){
+      return data;
+    }
+    else{
+      const keywords = filtered.split(" ");
+
+      for(var i = 0; i < keywords.length; i++){
+        if(data.title.toLowerCase().includes(keywords[i].toLowerCase()) || 
+            data.subtitle.toLowerCase().includes(keywords[i].toLowerCase())){
+          return data;
+        }
+      }
+    }
+  }).map(music => (
     <Music 
       id = {music.id}
       like = {music.like}

@@ -5,6 +5,12 @@ export default function Search(props){
 
     function handleSearch(e) {
         setSearch(e.target.value);
+        if(e.target.value !== ''){
+            props.search(e.target.value.trim());
+        }
+        else{
+            props.search('');
+        }
     }
 
     function handleSubmit(e) {
